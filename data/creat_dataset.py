@@ -1,20 +1,10 @@
 import pandas as pd
 import random
 
+# Generate a list of additional variables
+HealthVar = ["DiseasesTypes", "age", "gender", "blood_pressure", "cholesterol"]
 
-
-# Generate a list of 42 diseases
-Diseases = ["Flu", "Diabetes", "Asthma", "Heart Disease", "Hypertension",
-            "Arthritis", "Alzheimer's Disease", "Parkinson's Disease", "Cancer",
-            "COPD", "Kidney Disease", "Liver Disease", "Osteoporosis", "Depression",
-            "Anxiety", "Migraine", "Rheumatoid Arthritis", "Lupus", "Multiple Sclerosis",
-            "Crohn's Disease", "Ulcerative Colitis", "Schizophrenia", "Bipolar Disorder",
-            "Endometriosis", "PCOS", "Fibromyalgia", "Chronic Fatigue Syndrome", "Psoriasis",
-            "Eczema", "Celiac Disease", "Anemia", "Hypothyroidism", "Hyperthyroidism",
-            "GERD", "Sleep Apnea", "Chronic Kidney Disease", "Pancreatitis", "Gallstones",
-            "Hemorrhoids", "Diverticulitis", "Ovarian Cancer", "Testicular Cancer"]
-
-# Dictionary of diseases and symptoms (replace with actual symptoms)
+# Generate a dictionary of 42 diseases and their symptoms (replace with actual symptoms)
 disease_symptoms = {
     "Flu": ["fever", "cough", "fatigue", "headache", "body aches", "chills"],
     "Diabetes": ["increased thirst", "frequent urination", "fatigue", "unexplained weight loss", "blurred vision"],
@@ -78,16 +68,15 @@ print(len(Symptoms))
 print(Symptoms)
 
 
-# Generate a list of additional variables
-AdditionalVariables = ["age", "gender", "blood_pressure", "cholesterol", "target_variable"]
+
 
 # Combine all variables into a single list
-DatasetColumns = Symptoms + AdditionalVariables
+DatasetColumns = HumanHealthVar + Symptoms
 # Create an empty DataFrame
 df = pd.DataFrame(columns=DatasetColumns)
 
 # Populate the DataFrame with random data
-for disease in Diseases:
+for disease in disease_symptoms.keys():
     symptoms = [random.choice(["YES", "NO"]) for _ in range(len(Symptoms))]
     age = random.randint(18, 80)
     gender = random.choice(["M", "F"])
