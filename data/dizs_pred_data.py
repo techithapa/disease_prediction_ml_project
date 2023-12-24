@@ -1,8 +1,8 @@
 import pandas as pd
 import random
 
-# Generate a list of additional variables
-HealthVar = ["DiseasesTypes", "age", "gender", "blood_pressure", "cholesterol"]
+# Generate a list of Diseases related variables 
+disease_var = ["disease_types", "age", "gender", "blood_pressure", "cholesterol"]
 
 # Generate a dictionary of 42 diseases and their symptoms (replace with actual symptoms)
 disease_symptoms = {
@@ -64,44 +64,31 @@ for symptoms_list in disease_symptoms.values():
 # Remove duplicates from the combined list
 Symptoms = sorted(set(all_sorted_symptoms))
 
-print(len(Symptoms))
-print(Symptoms)
-
-
-
+# print(Symptoms)
 
 # Combine all variables into a single list
-DatasetColumns = HumanHealthVar + Symptoms
+DatasetColumns = disease_var + Symptoms
+
 # Create an empty DataFrame
 df = pd.DataFrame(columns=DatasetColumns)
-
 # Populate the DataFrame with random data
-for disease in disease_symptoms.keys():
-    symptoms = [random.choice(["YES", "NO"]) for _ in range(len(Symptoms))]
-    age = random.randint(18, 80)
-    gender = random.choice(["M", "F"])
-    blood_pressure = random.choice(["Normal", "High"])
-    cholesterol = random.choice(["Normal", "High"])
+df["disease_types"] = disease_symptoms.keys()
+for index, row in df.iterrows():
+    for column in df.columns:
+        df.at[index, 'age'] = random.randint(18, 80)
+        df.at[index, 'gender'] = random.choice(["M", "F"])
+        df.at[index, 'blood_pressure'] = random.choice(["Normal", "High"])
+        df.at[index, 'cholesterol'] = random.choice(["Normal", "High"])
 
-    # Update "YES" values based on disease-specific symptoms
-    if disease in disease_symptoms:
-        for symptom in disease_symptoms[disease]:
-            symptom_index = DatasetColumns.index(symptom)
-            symptoms[symptom_index] = "YES"
-
-    # Create a dictionary with column names and their corresponding values
-    data_dict = {
-        **{symptom: random.choice(["YES", "NO"]) for symptom in Symptoms},
-        "age": age,
-        "gender": gender,
-        "blood_pressure": blood_pressure,
-        "cholesterol": cholesterol,
-        "target_variable": disease
-    }
-
-    data = pd.DataFrame([data_dict])
-    # Append the dictionary as a new row in the DataFrame
-    df = pd.concat([df, data], ignore_index=True)
-
+# Update DataFrame based on conditions
+for key, value in disease_symptoms.items():
+    
+    for column_to_check in value:
+        # Get the row index where the value in the 'ID' column matches the key
+        diseaseT_index = df.index[df['disease_types'] == key].tolist()[0]
+                
+        # Check if the column name matches the value in the list
+        if column_to_check in df.columns:
+            df.at[diseaseT_index, column_to_check] = 'Yes'
 # Save the dataset to CSV
-df.to_csv('Dataset.csv', index=False)
+df.to_csv('./data/dizs_sympt_data.csv', index=False)
