@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction</title>
+</head>
+<body>
+    <h1>Disease Prediction</h1>
+    <form method="post" action="/">
+        <label for="symptoms">Select Symptoms:</label>
+        <select name="symptoms" multiple>
+            {% for symptom in symptoms %}
+                <option value="{{ symptom }}">{{ symptom }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit" value="Predict Disease">
+    </form>
+    
+    {% if prediction %}
+        <h2>Prediction Result:</h2>
+        <p>The predicted disease is: {{ prediction }}</p>
+    {% endif %}
+</body>
+</html>
