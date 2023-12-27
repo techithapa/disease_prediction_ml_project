@@ -68,6 +68,7 @@ Symptoms = sorted(set(all_sorted_symptoms))
 
 # Combine all variables into a single list
 DatasetColumns = disease_var + Symptoms
+print(len(DatasetColumns))
 
 # Create an empty DataFrame
 df = pd.DataFrame(columns=DatasetColumns)
@@ -91,4 +92,5 @@ for key, value in disease_symptoms.items():
         if column_to_check in df.columns:
             df.at[diseaseT_index, column_to_check] = 'Yes'
 # Save the dataset to CSV
+print(df)
 df.to_csv('./data/dizs_sympt_data.csv', index=False)
