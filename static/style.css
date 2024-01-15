@@ -1,0 +1,61 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center; /* Center the content within the container */
+}
+
+.input-section, .symptom-section {
+    margin-bottom: 20px;
+}
+
+/* Style for the title */
+h1 {
+    color: #333;
+}
+
+/* Style for the input sections */
+.input-section label, .symptom-section label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Style for the symptoms list */
+.symptom-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Style for the Predict Disease button */
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Style for the prediction result */
+#prediction-result {
+    margin-top: 20px;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+}

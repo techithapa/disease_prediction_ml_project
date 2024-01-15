@@ -2,7 +2,7 @@ import pandas as pd
 import random
 
 # Generate a list of Diseases related variables 
-disease_var = ["disease_types", "age", "gender", "blood_pressure", "cholesterol"]
+disease_var = ["disease_types"] # rest of these items are not considered this time "age", "gender", "blood_pressure", "cholesterol"
 
 # Generate a dictionary of 42 diseases and their symptoms (replace with actual symptoms)
 disease_symptoms = {
@@ -12,8 +12,7 @@ disease_symptoms = {
     "Heart Disease": ["chest pain", "shortness of breath", "fatigue", "dizziness", "irregular heartbeat"],
     "Hypertension": ["headache", "fatigue", "dizziness", "blurred vision"],
     "Arthritis": ["joint pain", "joint swelling", "morning stiffness", "decreased range of motion"],
-    "Alzheimer's Disease": ["memory loss", "confusion", "difficulty in problem-solving", "language problems"],
-    "Parkinson's Disease": ["tremors", "rigidity", "bradykinesia", "postural instability"],
+    "Parkinson": ["tremors", "rigidity", "bradykinesia", "postural instability"],
     "Cancer": ["unexplained weight loss", "fatigue", "pain", "skin changes", "changes in bowel habits"],
     "COPD": ["shortness of breath", "chronic cough", "sputum production", "wheezing"],
     "Kidney Disease": ["fatigue", "swelling", "changes in urine output", "blood in urine"],
@@ -42,6 +41,7 @@ disease_symptoms = {
     "GERD": ["heartburn", "acid regurgitation", "chest pain", "difficulty swallowing"],
     "Sleep Apnea": ["loud snoring", "episodes of stopped breathing during sleep", "excessive daytime sleepiness"],
     "Chronic Kidney Disease": ["fatigue", "swelling", "changes in urine output", "blood in urine"],
+    "Dementia": ["memory loss", "confusion", "difficulty in problem-solving", "language problems"],
     "Pancreatitis": ["abdominal pain", "nausea", "vomiting", "fever"],
     "Gallstones": ["abdominal pain", "nausea", "vomiting", "jaundice"],
     "Hemorrhoids": ["rectal bleeding", "anal itching", "pain during bowel movements", "swelling"],
@@ -74,23 +74,27 @@ print(len(DatasetColumns))
 df = pd.DataFrame(columns=DatasetColumns)
 # Populate the DataFrame with random data
 df["disease_types"] = disease_symptoms.keys()
+
+''' These lines are not considered this time
 for index, row in df.iterrows():
     for column in df.columns:
         df.at[index, 'age'] = random.randint(18, 80)
         df.at[index, 'gender'] = random.choice(["M", "F"])
         df.at[index, 'blood_pressure'] = random.choice(["Normal", "High"])
         df.at[index, 'cholesterol'] = random.choice(["Normal", "High"])
-
+'''
 # Update DataFrame based on conditions
 for key, value in disease_symptoms.items():
-    
-    for column_to_check in value:
+    for column in df.columns[1:]:
         # Get the row index where the value in the 'ID' column matches the key
         diseaseT_index = df.index[df['disease_types'] == key].tolist()[0]
-                
+
         # Check if the column name matches the value in the list
-        if column_to_check in df.columns:
-            df.at[diseaseT_index, column_to_check] = 'Yes'
+        if column in value:
+            df.at[diseaseT_index, column] = 'Yes'
+        else:
+            df.at[diseaseT_index, column] = 'No'
+            
 # Save the dataset to CSV
 print(df)
 df.to_csv('./data/dizs_sympt_data.csv', index=False)

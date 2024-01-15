@@ -3,24 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disease Prediction</title>
+    <title>Prognosis Predictor</title>
+    <link rel="stylesheet" href="C:\Users\sushi\Documents\Personal projects\RadicalX_Projects\disease_prediction_ml_project\static\style.css">
 </head>
 <body>
-    <h1>Disease Prediction</h1>
-    <form method="post" action="/">
-        <label for="symptoms">Select Symptoms:</label>
-        <select name="symptoms" multiple>
-            {% for symptom in symptoms %}
-                <option value="{{ symptom }}">{{ symptom }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <input type="submit" value="Predict Disease">
-    </form>
-    
-    {% if prediction %}
-        <h2>Prediction Result:</h2>
-        <p>The predicted disease is: {{ prediction }}</p>
-    {% endif %}
+    <div class="container">
+        <h1>Prognosis Predictor</h1>
+
+        <div class="input-section">
+            <label for="age">Age:</label>
+            <select name="age" id="age">
+                <option value="0-18">0-18</option>
+                <option value="19-35">19-35</option>
+                <option value="36-50">36-50</option>
+                <option value="51-65">51-65</option>
+                <option value="66+">66+</option>
+            </select>
+
+            <label for="gender">Gender:</label>
+            <select name="gender" id="gender">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+
+            <label for="blood_pressure">Blood Pressure:</label>
+            <select name="blood_pressure" id="blood_pressure">
+                <option value="High">High</option>
+                <option value="Normal">Normal</option>
+            </select>
+
+            <label for="cholesterol">Cholesterol:</label>
+            <select name="cholesterol" id="cholesterol">
+                <option value="High">High</option>
+                <option value="Normal">Normal</option>
+            </select>
+        </div>
+        <div class="symptom-section">
+            <form method="post" action="/">
+                <label for="symptoms">Select Symptoms:</label>
+                <div id="symptoms-list">
+                    {% for symptom in symptoms %}
+                        <div class="symptom-item">
+                            <input type="checkbox" name="symptoms" value="{{ symptom }}" id="{{ symptom }}">
+                            <label for="{{ symptom }}">{{ symptom }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <br>
+                <input type="submit" value="Predict Disease">
+            </form>
+        </div>
+
+        <div id="prediction-result">
+            <!-- Prediction result will be displayed here -->
+            {% if prediction %}
+                <h2>Prediction Result:</h2>
+                <p>The predicted disease is: {{ prediction|safe }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="C:\Users\sushi\Documents\Personal projects\RadicalX_Projects\disease_prediction_ml_project\static\script.js"></script>
 </body>
 </html>
